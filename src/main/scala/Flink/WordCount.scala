@@ -21,6 +21,5 @@ object WordCount {
 
     //输出
     wordCountDataSet.print()
-
   }
 }

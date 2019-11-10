@@ -1,5 +1,0 @@
-<root>
-    <item name='org.apache.flink.streaming.api.functions.sink.SinkFunction'>
-        <annotation name='java.lang.Deprecated'/>
-    </item>
-</root>

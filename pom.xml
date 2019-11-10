@@ -26,6 +26,13 @@
             <version>4.12</version>
         </dependency>
 
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.47</version>
+        </dependency>
+
         <!-- Scala -->
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -67,6 +74,21 @@
             <artifactId>flink-connector-kafka-0.11_2.11</artifactId>
             <version>${flink.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.bahir</groupId>
+            <artifactId>flink-connector-redis_2.11</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>com.alibaba</groupId>

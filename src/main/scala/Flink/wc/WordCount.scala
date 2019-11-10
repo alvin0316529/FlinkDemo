@@ -1,7 +1,12 @@
-package Flink
+package Flink.wc
 
 import org.apache.flink.api.scala._
 
+/**
+  * @Description
+  * @Author alvin
+  * @Date 2019-11-09 17:20:36
+  */
 object WordCount {
   def main(args: Array[String]): Unit = {
     //创建一个批处理的执行环境

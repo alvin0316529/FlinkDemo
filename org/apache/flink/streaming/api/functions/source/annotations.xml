@@ -1,0 +1,5 @@
+<root>
+    <item name='org.apache.flink.streaming.api.functions.source.SourceFunction'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

@@ -4,7 +4,6 @@ package Flink.api
 import java.util.Properties
 
 import org.apache.flink.api.common.serialization.SimpleStringSchema
-import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
 
@@ -18,10 +17,8 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011
 
 
 object SourceTest {
-
   //温度传感器读数样例类
   case class SensorReading(id:String,timestamp:Long,temperature:Double)
-
 
   def main(args: Array[String]): Unit = {
     val env  = StreamExecutionEnvironment.getExecutionEnvironment
@@ -62,12 +59,18 @@ object SourceTest {
 
     //stream1.print("stream1").setParallelism(1)
     //stream2.print("stream2").setParallelism(1)
-    //stream3.print().setParallelism(1)
+    //stream3.print("stream3").setParallelism(1)
+    stream4.print("stream4").setParallelism(1)
 
     env.execute("source test")
   }
 
 }
+
+
+
+
+
 
 
 

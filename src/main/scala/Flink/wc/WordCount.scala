@@ -1,6 +1,7 @@
 package Flink.wc
 
 import org.apache.flink.api.scala._
+import org.apache.flink.streaming.api.functions.KeyedProcessFunction
 
 /**
   * @Description
@@ -13,6 +14,7 @@ object WordCount {
     val env = ExecutionEnvironment.getExecutionEnvironment
 
     val inputPath = "F:\\data\\spark\\spark1.txt"
+
 
     //从文件中读取数据
     val inputDataSet = env.readTextFile(inputPath)

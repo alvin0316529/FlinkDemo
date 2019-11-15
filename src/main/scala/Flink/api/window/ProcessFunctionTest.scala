@@ -2,7 +2,10 @@ package Flink.api.window
 
 
 import Flink.api.SourceTest.SensorReading
+import akka.japi.Option
+import org.apache.flink.api.common.functions.RichFlatMapFunction
 import org.apache.flink.api.common.state.{ValueState, ValueStateDescriptor}
+import org.apache.flink.configuration.Configuration
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction
 import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor
@@ -37,9 +40,37 @@ object ProcessFunctionTest {
       .process(new TempIncreAlert())
 
 
+    val processedStream2 = dataStream.keyBy(_.id)
+        .flatMap(new TempAlert(10.0))
+
+    /**
+      * flatMapWithState[R: TypeInformation, S: TypeInformation](
+      * fun: (T, Option[S]) => (TraversableOnce[R], Option[S])): DataStream[R]
+      *
+      * R : 输出类型
+      * S : stateful状态类型
+      * T : 输入类型
+      *
+      */
+    val processedStream3 = dataStream.keyBy(_.id)
+        .flatMapWithState[(String,Double,Double),Double]{
+      case (in:SensorReading,None) => (List.empty,Some(in.temperature))
+      case (in:SensorReading,lastTemp:Some[Double]) =>{
+        val diff = (in.temperature - lastTemp.get).abs
+        if(diff > 10){
+          (List((in.id,in.temperature,lastTemp.get)),Some(in.temperature))
+        }else{
+          (List.empty,Some(in.temperature))
+        }
+      }
+    }
+
+
     dataStream.print("input data")
 
     processedStream.print("process data")
+
+    processedStream2.print("process alert data")
 
     env.execute("process function test")
 
@@ -98,3 +129,36 @@ class TempIncreAlert() extends KeyedProcessFunction[String,SensorReading,String]
 
   }
 }
+
+
+class TempAlert(thrhold:Double) extends RichFlatMapFunction[SensorReading,(String,Double,Double)]{
+
+  //先定义一个空的状态变量
+  private var lastTempState : ValueState[Double] = _
+
+  override def open(parameters: Configuration): Unit = {
+    lastTempState = getRuntimeContext.getState(new ValueStateDescriptor("lastTmep",classOf[Double]))
+  }
+
+  override def flatMap(value: SensorReading, out: Collector[(String, Double, Double)]): Unit = {
+    //获取上次的温度值
+    val lastTemp = lastTempState.value()
+
+    //跟最新的温度值计算插值，如果大于阈值，那么输出报警
+    val diff = (value.temperature - lastTemp).abs
+
+    if(diff > thrhold){
+      out.collect((value.id,value.temperature,lastTemp))
+    }
+
+    //更新lastTempState值
+    lastTempState.update(value.temperature)
+
+  }
+
+
+
+
+}
+
+

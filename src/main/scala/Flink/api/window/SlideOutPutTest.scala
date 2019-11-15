@@ -1,6 +1,8 @@
 package Flink.api.window
 
 import Flink.api.SourceTest.SensorReading
+import org.apache.flink.runtime.state.filesystem.FsStateBackend
+import org.apache.flink.runtime.state.memory.MemoryStateBackend
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.ProcessFunction
 import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor
@@ -18,6 +20,11 @@ object SlideOutPutTest {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setParallelism(1)
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
+
+    //设置状态后端，一般不在代码里面设置，在配置文件里面设置
+    //env.setStateBackend(new FsStateBackend(""))
+    //env.setStateBackend(new MemoryStateBackend())
+
 
 
     val stream = env.socketTextStream("localhost",7777)

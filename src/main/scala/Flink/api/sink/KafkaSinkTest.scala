@@ -22,8 +22,8 @@ object KafkaSinkTest {
     val prop = new Properties()
     prop.setProperty("bootstrap.servers","localhost:9092")
     prop.setProperty("group.id","consume-group")
-    prop.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    prop.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+    prop.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+    prop.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     prop.setProperty("auto.offset.reset","latest")
 
     val topic = "sensor"

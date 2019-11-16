@@ -11,7 +11,7 @@
 
     <properties>
         <encoding>UTF-8</encoding>
-        <scala.version>2.11.8</scala.version>
+        <scala.version>2.13.1</scala.version>
         <scala.compat.version>2.11</scala.compat.version>
         <flink.version>1.7.2</flink.version>
     </properties>

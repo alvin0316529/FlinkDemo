@@ -1,0 +1,5 @@
+<root>
+    <item name='org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor BoundedOutOfOrdernessTimestampExtractor(org.apache.flink.streaming.api.windowing.time.Time)'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

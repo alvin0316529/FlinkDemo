@@ -12,7 +12,7 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.{RedisCommand, 
   */
 object RedisUtils {
   val conf = new FlinkJedisPoolConfig.Builder()
-    .setHost("localhost")
+    .setHost("slave04.bigdata")
     .setPort(6379)
     .build()
 
@@ -29,9 +29,9 @@ object RedisUtils {
       new RedisCommandDescription(RedisCommand.HSET,"sensor_temperature")
     }
 
-    override def getKeyFromData(data: SensorReading): String = data.temperature.toString
+    override def getKeyFromData(data: SensorReading): String = data.id
 
-    override def getValueFromData(data: SensorReading): String = data.id
+    override def getValueFromData(data: SensorReading): String = data.temperature.toString
   }
 
 }

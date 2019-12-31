@@ -15,7 +15,7 @@ class JdbcSink(sql:String) extends RichSinkFunction[SensorReading]{
 
   //定义连接、PreparedStatement
   //val dirver = "com.mysql.jdbc.Driver"
-  val url = "jdbc:mysql://localhost:3306/dbname?useSSL=false"
+  val url = "jdbc:mysql://master01.bigdata:3306/mhzs?useSSL=false"
   val username = "root"
   val password = "123456"
   //val maxActive = "20"
@@ -39,8 +39,9 @@ class JdbcSink(sql:String) extends RichSinkFunction[SensorReading]{
     //super.invoke(value,context)
 
     //执行
-    stmt.setDouble(1,value.temperature)
-    stmt.setString(2,value.id)
+    stmt.setString(1,value.id)
+    stmt.setDouble(2,value.temperature)
+
 
     stmt.execute()
   }

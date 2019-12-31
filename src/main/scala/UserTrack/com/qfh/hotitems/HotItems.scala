@@ -44,11 +44,13 @@ object HotItems {
 
 
     val prop = new Properties()
-    prop.setProperty("bootstrap.servers","localhost:9092")
-    prop.setProperty("group.id","consume-group")
+    val brokerlist = "slave01.bigdata:9092,slave02.bigdata:9092,slave04.bigdata:9092"
+    prop.setProperty("bootstrap.servers",brokerlist)
+    prop.setProperty("group.id","group1")
     prop.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     prop.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    prop.setProperty("auto.offset.reset","latest")
+    //prop.setProperty("auto.offset.reset","latest")
+    prop.setProperty("auto.offset.reset","earliest")
 
     val topic  = "hotitems"
 
@@ -78,6 +80,9 @@ object HotItems {
 
     //preAggregator: AggregateFunction[T, ACC, V],
     //windowFunction: ProcessWindowFunction[V, R, K, W]
+
+
+
 
 
     env.execute("hot items")
